@@ -2,41 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Government-Grade Control Room Design System - SIH2025 
+All colors MUST be HSL for government compliance.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Command Center Background */
+    --background: 210 25% 8%;
+    --foreground: 210 20% 90%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Control Panel Cards */
+    --card: 210 25% 12%;
+    --card-foreground: 210 20% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Dialog & Popover Surfaces */
+    --popover: 210 25% 12%;
+    --popover-foreground: 210 20% 90%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Government Primary (Navy Blue) */
+    --primary: 210 50% 25%;
+    --primary-foreground: 210 20% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary Controls */
+    --secondary: 210 20% 15%;
+    --secondary-foreground: 210 20% 85%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Elements */
+    --muted: 210 20% 15%;
+    --muted-foreground: 210 15% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent Highlights */
+    --accent: 210 20% 20%;
+    --accent-foreground: 210 20% 90%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Danger/Critical Alerts */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Interface Borders */
+    --border: 210 20% 20%;
+    --input: 210 20% 15%;
+    --ring: 210 50% 45%;
 
-    --radius: 0.5rem;
+    /* Government Safety Colors */
+    --gov-safe: 160 75% 45%;
+    --gov-caution: 45 95% 55%;
+    --gov-danger: 0 75% 55%;
+    --gov-info: 200 80% 60%;
+
+    /* Monitoring Glow Effects */
+    --glow-safe: 160 75% 45%;
+    --glow-caution: 45 95% 55%;
+    --glow-danger: 0 75% 55%;
+    --glow-active: 210 80% 60%;
+
+    /* Control Room Gradients */
+    --gradient-command: linear-gradient(135deg, hsl(var(--background)), hsl(210 25% 10%));
+    --gradient-panel: linear-gradient(180deg, hsl(var(--card)), hsl(210 25% 14%));
+    --gradient-status: linear-gradient(90deg, hsl(var(--primary)), hsl(210 60% 30%));
+
+    /* Professional Shadows */
+    --shadow-command: 0 8px 32px -8px hsl(210 25% 3% / 0.6);
+    --shadow-glow-safe: 0 0 20px hsl(var(--glow-safe) / 0.3);
+    --shadow-glow-caution: 0 0 20px hsl(var(--glow-caution) / 0.3);
+    --shadow-glow-danger: 0 0 20px hsl(var(--glow-danger) / 0.3);
+    --shadow-glow-active: 0 0 20px hsl(var(--glow-active) / 0.2);
+
+    /* Animations */
+    --transition-command: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-glow: box-shadow 0.3s ease-in-out;
+
+    --radius: 8px;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +137,6 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-ibm-plex;
   }
 }

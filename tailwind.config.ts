@@ -47,6 +47,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Government Safety Status Colors
+        gov: {
+          safe: "hsl(var(--gov-safe))",
+          caution: "hsl(var(--gov-caution))",
+          danger: "hsl(var(--gov-danger))",
+          info: "hsl(var(--gov-info))",
+        },
+        // Monitoring Glow Effects
+        glow: {
+          safe: "hsl(var(--glow-safe))",
+          caution: "hsl(var(--glow-caution))",
+          danger: "hsl(var(--glow-danger))",
+          active: "hsl(var(--glow-active))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -58,10 +72,24 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      fontFamily: {
+        // Government-Grade Typography
+        "ibm-plex": ["IBM Plex Sans", "Inter", "system-ui", "sans-serif"],
+        "command": ["Roboto Condensed", "IBM Plex Sans", "sans-serif"],
+      },
+      backgroundImage: {
+        // Command Center Gradients
+        "gradient-command": "var(--gradient-command)",
+        "gradient-panel": "var(--gradient-panel)",
+        "gradient-status": "var(--gradient-status)",
+      },
+      boxShadow: {
+        // Professional Control Room Shadows
+        "command": "var(--shadow-command)",
+        "glow-safe": "var(--shadow-glow-safe)",
+        "glow-caution": "var(--shadow-glow-caution)",
+        "glow-danger": "var(--shadow-glow-danger)",
+        "glow-active": "var(--shadow-glow-active)",
       },
       keyframes: {
         "accordion-down": {
