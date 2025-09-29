@@ -76,6 +76,9 @@ export default {
         // Government-Grade Typography
         "ibm-plex": ["IBM Plex Sans", "Inter", "system-ui", "sans-serif"],
         "command": ["Roboto Condensed", "IBM Plex Sans", "sans-serif"],
+        "inter": ["Inter", "system-ui", "sans-serif"],
+        "space-grotesk": ["Space Grotesk", "Inter", "sans-serif"],
+        "admin": ["Space Grotesk", "Inter", "system-ui", "sans-serif"],
       },
       backgroundImage: {
         // Command Center Gradients

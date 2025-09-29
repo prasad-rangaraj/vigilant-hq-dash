@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
+import { useState } from 'react';
 import { 
   Settings, 
   Shield, 
@@ -63,16 +64,37 @@ const getSeverityColor = (severity: string) => {
 };
 
 export default function AdminSettings() {
+  const [securitySettings, setSecuritySettings] = useState({
+    twoFactor: true,
+    sessionTimeout: true,
+    auditLogging: true,
+    ipWhitelist: false
+  });
+
+  const [alertSettings, setAlertSettings] = useState({
+    criticalAlerts: true,
+    smsAlerts: true,
+    emailNotifications: true,
+    pushNotifications: false
+  });
+
+  const [systemPreferences, setSystemPreferences] = useState({
+    darkMode: false,
+    autoRefresh: true,
+    soundAlerts: true,
+    dataExport: true
+  });
+
   return (
     <MainLayout>
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 font-admin">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-command font-bold text-foreground tracking-wider">
+            <h1 className="text-4xl font-admin font-bold text-foreground tracking-tight">
               ADMIN SETTINGS
             </h1>
-            <p className="text-muted-foreground mt-2">
+            <p className="text-muted-foreground mt-3 text-lg font-inter">
               System configuration, user management, and security settings
             </p>
           </div>
@@ -92,11 +114,11 @@ export default function AdminSettings() {
           {/* System Status */}
           <Card>
             <CardHeader>
-              <CardTitle className="font-command tracking-wider flex items-center">
-                <Database className="h-5 w-5 mr-2" />
-                SYSTEM STATUS
-              </CardTitle>
-              <CardDescription>Real-time monitoring of critical system components</CardDescription>
+            <CardTitle className="font-admin text-xl font-semibold tracking-tight flex items-center">
+              <Database className="h-6 w-6 mr-3" />
+              SYSTEM STATUS
+            </CardTitle>
+            <CardDescription className="font-inter">Real-time monitoring of critical system components</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -108,7 +130,7 @@ export default function AdminSettings() {
                       ) : (
                         <AlertTriangle className="h-4 w-4 text-gov-caution" />
                       )}
-                      <span className="font-medium text-foreground">{item.component}</span>
+                      <span className="font-semibold text-foreground font-inter">{item.component}</span>
                     </div>
                     <div className="text-right">
                       <Badge variant={item.status === 'healthy' ? 'default' : 'secondary'}>
@@ -125,19 +147,19 @@ export default function AdminSettings() {
           {/* User Management */}
           <Card>
             <CardHeader>
-              <CardTitle className="font-command tracking-wider flex items-center">
-                <Users className="h-5 w-5 mr-2" />
-                USER ROLES & PERMISSIONS
-              </CardTitle>
-              <CardDescription>Manage user access levels and system permissions</CardDescription>
+            <CardTitle className="font-admin text-xl font-semibold tracking-tight flex items-center">
+              <Users className="h-6 w-6 mr-3" />
+              USER ROLES & PERMISSIONS
+            </CardTitle>
+            <CardDescription className="font-inter">Manage user access levels and system permissions</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {userRoles.map((role, index) => (
                   <div key={index} className="border border-border rounded-lg p-3">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-foreground">{role.name}</span>
-                      <Badge variant="outline">{role.users} users</Badge>
+                      <span className="font-semibold text-foreground font-inter">{role.name}</span>
+                      <Badge variant="outline" className="font-inter">{role.users} users</Badge>
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {role.permissions.map((permission, pIndex) => (
@@ -160,79 +182,91 @@ export default function AdminSettings() {
         {/* Security Settings */}
         <Card>
           <CardHeader>
-            <CardTitle className="font-command tracking-wider flex items-center">
-              <Shield className="h-5 w-5 mr-2" />
+            <CardTitle className="font-admin text-xl font-semibold tracking-tight flex items-center">
+              <Shield className="h-6 w-6 mr-3" />
               SECURITY CONFIGURATION
             </CardTitle>
-            <CardDescription>System security policies and access controls</CardDescription>
+            <CardDescription className="font-inter">System security policies and access controls</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-foreground">Two-Factor Authentication</p>
-                    <p className="text-sm text-muted-foreground">Require 2FA for all admin users</p>
+                    <p className="font-semibold text-foreground font-inter">Two-Factor Authentication</p>
+                    <p className="text-sm text-muted-foreground font-inter">Require 2FA for all admin users</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch 
+                    checked={securitySettings.twoFactor}
+                    onCheckedChange={(checked) => setSecuritySettings(prev => ({...prev, twoFactor: checked}))}
+                  />
                 </div>
                 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-foreground">Session Timeout</p>
-                    <p className="text-sm text-muted-foreground">Auto-logout after 30 minutes</p>
+                    <p className="font-semibold text-foreground font-inter">Session Timeout</p>
+                    <p className="text-sm text-muted-foreground font-inter">Auto-logout after 30 minutes</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch 
+                    checked={securitySettings.sessionTimeout}
+                    onCheckedChange={(checked) => setSecuritySettings(prev => ({...prev, sessionTimeout: checked}))}
+                  />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-foreground">Audit Logging</p>
-                    <p className="text-sm text-muted-foreground">Log all user actions</p>
+                    <p className="font-semibold text-foreground font-inter">Audit Logging</p>
+                    <p className="text-sm text-muted-foreground font-inter">Log all user actions</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch 
+                    checked={securitySettings.auditLogging}
+                    onCheckedChange={(checked) => setSecuritySettings(prev => ({...prev, auditLogging: checked}))}
+                  />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-foreground">IP Whitelist</p>
-                    <p className="text-sm text-muted-foreground">Restrict access by IP address</p>
+                    <p className="font-semibold text-foreground font-inter">IP Whitelist</p>
+                    <p className="text-sm text-muted-foreground font-inter">Restrict access by IP address</p>
                   </div>
-                  <Switch />
+                  <Switch 
+                    checked={securitySettings.ipWhitelist}
+                    onCheckedChange={(checked) => setSecuritySettings(prev => ({...prev, ipWhitelist: checked}))}
+                  />
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-foreground">Data Encryption</p>
-                    <p className="text-sm text-muted-foreground">AES-256 encryption at rest</p>
+                    <p className="font-semibold text-foreground font-inter">Data Encryption</p>
+                    <p className="text-sm text-muted-foreground font-inter">AES-256 encryption at rest</p>
                   </div>
-                  <Badge variant="default" className="bg-gov-safe">ENABLED</Badge>
+                  <Badge variant="default" className="bg-gov-safe font-inter">ENABLED</Badge>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-foreground">Backup Schedule</p>
-                    <p className="text-sm text-muted-foreground">Automated daily backups</p>
+                    <p className="font-semibold text-foreground font-inter">Backup Schedule</p>
+                    <p className="text-sm text-muted-foreground font-inter">Automated daily backups</p>
                   </div>
-                  <Badge variant="default" className="bg-gov-safe">ACTIVE</Badge>
+                  <Badge variant="default" className="bg-gov-safe font-inter">ACTIVE</Badge>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-foreground">SSL Certificate</p>
-                    <p className="text-sm text-muted-foreground">Valid until March 2025</p>
+                    <p className="font-semibold text-foreground font-inter">SSL Certificate</p>
+                    <p className="text-sm text-muted-foreground font-inter">Valid until March 2025</p>
                   </div>
-                  <Badge variant="default" className="bg-gov-safe">VALID</Badge>
+                  <Badge variant="default" className="bg-gov-safe font-inter">VALID</Badge>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-foreground">Intrusion Detection</p>
-                    <p className="text-sm text-muted-foreground">Real-time threat monitoring</p>
+                    <p className="font-semibold text-foreground font-inter">Intrusion Detection</p>
+                    <p className="text-sm text-muted-foreground font-inter">Real-time threat monitoring</p>
                   </div>
-                  <Badge variant="default" className="bg-gov-safe">ACTIVE</Badge>
+                  <Badge variant="default" className="bg-gov-safe font-inter">ACTIVE</Badge>
                 </div>
               </div>
             </div>
@@ -242,11 +276,11 @@ export default function AdminSettings() {
         {/* Audit Logs */}
         <Card>
           <CardHeader>
-            <CardTitle className="font-command tracking-wider flex items-center">
-              <Eye className="h-5 w-5 mr-2" />
+            <CardTitle className="font-admin text-xl font-semibold tracking-tight flex items-center">
+              <Eye className="h-6 w-6 mr-3" />
               AUDIT TRAIL
             </CardTitle>
-            <CardDescription>System activity logs and security events</CardDescription>
+            <CardDescription className="font-inter">System activity logs and security events</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -260,8 +294,8 @@ export default function AdminSettings() {
                         {log.severity.toUpperCase()}
                       </Badge>
                     </div>
-                    <p className="text-sm text-foreground mb-1">{log.action}</p>
-                    <p className="text-xs text-muted-foreground">{log.user}</p>
+                    <p className="text-sm text-foreground mb-1 font-inter">{log.action}</p>
+                    <p className="text-xs text-muted-foreground font-inter">{log.user}</p>
                   </div>
                 </div>
               ))}
@@ -276,54 +310,78 @@ export default function AdminSettings() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="font-command tracking-wider flex items-center">
-                <Bell className="h-5 w-5 mr-2" />
-                ALERT SETTINGS
-              </CardTitle>
+            <CardTitle className="font-admin text-lg font-semibold tracking-tight flex items-center">
+              <Bell className="h-5 w-5 mr-2" />
+              ALERT SETTINGS
+            </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground">Critical Alert Notifications</span>
-                <Switch defaultChecked />
+                <span className="text-sm text-foreground font-inter font-medium">Critical Alert Notifications</span>
+                <Switch 
+                  checked={alertSettings.criticalAlerts}
+                  onCheckedChange={(checked) => setAlertSettings(prev => ({...prev, criticalAlerts: checked}))}
+                />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground">SMS Alerts</span>
-                <Switch defaultChecked />
+                <span className="text-sm text-foreground font-inter font-medium">SMS Alerts</span>
+                <Switch 
+                  checked={alertSettings.smsAlerts}
+                  onCheckedChange={(checked) => setAlertSettings(prev => ({...prev, smsAlerts: checked}))}
+                />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground">Email Notifications</span>
-                <Switch defaultChecked />
+                <span className="text-sm text-foreground font-inter font-medium">Email Notifications</span>
+                <Switch 
+                  checked={alertSettings.emailNotifications}
+                  onCheckedChange={(checked) => setAlertSettings(prev => ({...prev, emailNotifications: checked}))}
+                />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground">Push Notifications</span>
-                <Switch />
+                <span className="text-sm text-foreground font-inter font-medium">Push Notifications</span>
+                <Switch 
+                  checked={alertSettings.pushNotifications}
+                  onCheckedChange={(checked) => setAlertSettings(prev => ({...prev, pushNotifications: checked}))}
+                />
               </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-command tracking-wider flex items-center">
-                <Globe className="h-5 w-5 mr-2" />
-                SYSTEM PREFERENCES
-              </CardTitle>
+            <CardTitle className="font-admin text-lg font-semibold tracking-tight flex items-center">
+              <Globe className="h-5 w-5 mr-2" />
+              SYSTEM PREFERENCES
+            </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground">Dark Mode Interface</span>
-                <Switch />
+                <span className="text-sm text-foreground font-inter font-medium">Dark Mode Interface</span>
+                <Switch 
+                  checked={systemPreferences.darkMode}
+                  onCheckedChange={(checked) => setSystemPreferences(prev => ({...prev, darkMode: checked}))}
+                />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground">Auto-refresh Dashboard</span>
-                <Switch defaultChecked />
+                <span className="text-sm text-foreground font-inter font-medium">Auto-refresh Dashboard</span>
+                <Switch 
+                  checked={systemPreferences.autoRefresh}
+                  onCheckedChange={(checked) => setSystemPreferences(prev => ({...prev, autoRefresh: checked}))}
+                />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground">Sound Alerts</span>
-                <Switch defaultChecked />
+                <span className="text-sm text-foreground font-inter font-medium">Sound Alerts</span>
+                <Switch 
+                  checked={systemPreferences.soundAlerts}
+                  onCheckedChange={(checked) => setSystemPreferences(prev => ({...prev, soundAlerts: checked}))}
+                />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground">Data Export Access</span>
-                <Switch defaultChecked />
+                <span className="text-sm text-foreground font-inter font-medium">Data Export Access</span>
+                <Switch 
+                  checked={systemPreferences.dataExport}
+                  onCheckedChange={(checked) => setSystemPreferences(prev => ({...prev, dataExport: checked}))}
+                />
               </div>
             </CardContent>
           </Card>
