@@ -10,6 +10,9 @@ import AIRisk from "./pages/AIRisk";
 import Alerts from "./pages/Alerts";
 import Reports from "./pages/Reports";
 import WorkerProfiles from "./pages/WorkerProfiles";
+import DeviceManagement from "./pages/DeviceManagement";
+import TrainingMode from "./pages/TrainingMode";
+import AdminSettings from "./pages/AdminSettings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +31,9 @@ const App = () => (
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/profiles" element={<WorkerProfiles />} />
+          <Route path="/devices" element={<DeviceManagement />} />
+          <Route path="/training" element={<TrainingMode />} />
+          <Route path="/admin" element={<AdminSettings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
